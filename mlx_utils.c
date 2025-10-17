@@ -53,12 +53,8 @@ int clean_exit(t_fractol *f)
 
 int key_hook(int keycode, t_fractol *f)
 {
-    // ESC tuşu genellikle 53 (MacOS) veya 65307 (Linux/X11) keycode'udur.
-    if (keycode == 53 || keycode == 65307) 
-    {
+    if (keycode == 65307) 
         clean_exit(f);
-    }
-    // Diğer tuşlar için (bonus kısımda kullanılacak)
     return (0);
 }
 

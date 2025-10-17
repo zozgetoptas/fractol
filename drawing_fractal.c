@@ -55,20 +55,13 @@ static void put_pixel(t_fractol *f, int x, int y, int color)
 
 // Fraktalın başlangıç zoom ve konumunu ayarlar.
 static void init_map_params(t_fractol *f)
-{
-    // Fraktalın tamamını görmek için başlangıç haritalama değerleri
-    // Mandelbrot ve Julia için genellikle [-2.0, 2.0] veya [-2.0, 1.0] aralığı kullanılır.
-    
+{   
     f->min_re = -2.0;
     f->max_re = 2.0;
     f->min_im = -2.0;
     f->max_im = 2.0;
-    
-    // Not: Bazı Mandelbrot başlangıçları min_re = -2.0, max_re = 1.0 kullanır.
-    // Bu değerleri test ederek en uygun görünümü bulabilirsiniz.
 }
 
-// Fraktalın ana çizim döngüsü
 int draw_fractal(t_fractol *f)
 {
     int         x;
@@ -76,37 +69,25 @@ int draw_fractal(t_fractol *f)
     int         iter;
     t_complex   c;
 
-    // Harita parametreleri ayarlanmadıysa veya program ilk kez çalışıyorsa ayarla
     if (f->min_re == 0.0) 
         init_map_params(f);
-
     y = -1;
-    while (++y < HEIGHT) // HEIGHT, fractol.h'de tanımlı
+    while (++y < HEIGHT)
     {
         x = -1;
-        while (++x < WIDTH) // WIDTH, fractol.h'de tanımlı
+        while (++x < WIDTH)
         {
-            // 1. Pikseli karmaşık düzleme haritala (Map to complex plane)
             c.re = f->min_re + (f->max_re - f->min_re) * x / WIDTH;
             c.im = f->min_im + (f->max_im - f->min_im) * y / HEIGHT;
-
-            // 2. Fraktal İterasyonunu Hesapla
             if (ft_strncmp(f->fractal_name, "mandelbrot", 11) == 0)
-            {
-                // Mandelbrot: c = piksel koordinatı, iterasyon z0 = (0,0)
                 iter = mandelbrot_iter(c);
-            }
-            else // Julia
-            {
-                // Julia: c = sabit parametre (f->julia_c), iterasyon z0 = piksel koordinatı
+            else if (ft_strncmp(f->fractal_name, "julia", 6) == 0)
                 iter = julia_iter(c, f->julia_c);
-            }
             int final_color;
             final_color = get_color(iter, MAX_ITER);
             put_pixel(f, x, y, final_color);
         }
     }
-    
     mlx_put_image_to_window(f->mlx, f->win, f->img.img_ptr, 0, 0);
     return (0);
 }

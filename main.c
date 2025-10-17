@@ -53,6 +53,5 @@ int main(int argc, char **argv)
     setup_mlx_hooks(&f);
     draw_fractal(&f);
     mlx_loop(f.mlx); 
-
     return (EXIT_SUCCESS);
 }

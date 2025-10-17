@@ -3,7 +3,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 MLX_DIR = minilibx-linux
-MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_LIB = $(MLX_DIR)/libmlx.a # derlenmis minilibx statik kutuphanesinin pathi
 
 # MiniLibX Kütüphane Yolları ve Bağlantıları
 # -L$(MLX_DIR): Kütüphane arama yoluna MiniLibX klasörünü ekler
@@ -11,17 +11,13 @@ MLX_LIB = $(MLX_DIR)/libmlx.a
 # -lXext -lX11: MiniLibX'in ihtiyaç duyduğu X11 sistem kütüphaneleri
 # -lm: Matematik kütüphanesi (Fraktallar için zorunlu)
 LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
-
-# Header dosyaları için arama yolu
-# -I$(MLX_DIR): mlx.h dosyasının yolunu belirtir
 INCLUDES = -I. -I$(MLX_DIR)
-
 SRCS = mlx_utils.c \
 	   math_utils.c \
 	   libft_stuff.c \
 	   drawing_fractal.c \
 	   main.c
-
+	   
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
