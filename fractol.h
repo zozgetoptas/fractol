@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ztoptas <ztoptas@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/17 20:29:36 by ztoptas           #+#    #+#             */
+/*   Updated: 2025/10/17 20:29:36 by ztoptas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
@@ -30,13 +42,13 @@ bu değer pikselden piksele değişir.
 
 typedef struct s_complex
 {
-    double  real;
-    double  imaginary;
+    double  re;
+    double  im;
 }               t_complex;
 
 typedef struct s_image
 {
-    void    *image_pointer;
+    void    *img_ptr;
     char    *addr;
     int     bpp;    // bits per pixel
     int     line_len;
@@ -60,12 +72,18 @@ typedef struct s_fractol
 
 // Fonksiyon Prototipleri
 // main.c
-void    print_usage_and_exit(void);
-int     parse_args(int argc, char **argv, t_fractol *f);
-
-// mlx_utils.c
-void    setup_mlx_hooks(t_fractol *f);
+void    print_right_usage_and_exit(void);
+int     parse_arguments(int argc, char **argv, t_fractol *f);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+double  ft_atof(const char *str);
+int draw_fractal(t_fractol *f);
+int julia_iter(t_complex z, t_complex c);
+t_complex complex_square(t_complex z);
+int mandelbrot_iter(t_complex c);
+int init_mlx(t_fractol *f);
+int clean_exit(t_fractol *f);
+int key_hook(int keycode, t_fractol *f);
+void setup_mlx_hooks(t_fractol *f);
 int     close_window(t_fractol *f);
-int     key_hook(int keycode, t_fractol *f);
 
 #endif

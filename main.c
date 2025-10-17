@@ -14,8 +14,8 @@
 
 void    print_right_usage_and_exit(void)
 {
-    write(1, "Usage: ./fractol <fractal_name> [julia_re] [julia_im]\n", 54);
-    write(1, "Available fractals:\n", 20);
+    write(1, "right usage: ./fractol <fractal_name> [julia_re] [julia_im]\n", 60);
+    write(1, "available fractals:\n", 20);
     write(1, "  - mandelbrot\n", 15);
     write(1, "  - julia <C_re> <C_im>\n", 24);
     exit(1);
@@ -26,9 +26,9 @@ int parse_arguments(int argc, char **argv, t_fractol *f)
     if (argc < 2)
         print_right_usage_and_exit();
     f->fractal_name = argv[1];
-    if (strcmp(f->fractal_name, "mandelbrot") == 0)
+    if (ft_strncmp(f->fractal_name, "mandelbrot", 11) == 0)
         return (1);
-    else if (ft_strcmp(f->fractal_name, "julia") == 0)
+    else if (ft_strncmp(f->fractal_name, "julia", 6) == 0)
     {
         if (argc < 4)
             print_right_usage_and_exit();
@@ -37,7 +37,7 @@ int parse_arguments(int argc, char **argv, t_fractol *f)
         return (1);
     }
     else
-        print_usage_and_exit();
+        print_right_usage_and_exit();
     return (0);
 }
 
@@ -46,21 +46,12 @@ int main(int argc, char **argv)
 {
     t_fractol   f;
 
-    if (!parse_args(argc, argv, &f))
-        return (EXIT_FAILURE);
-
-    // 2. MiniLibX'i Başlatma, Pencere ve Görüntü Oluşturma
+    if (!parse_arguments(argc, argv, &f))
+        return (1);
     if (!init_mlx(&f))
-        return (EXIT_FAILURE);
-
-    // 3. Olayları Bağlama (ESC ve X düğmesi için)
+        return (1);
     setup_mlx_hooks(&f);
-
-    // 4. Fraktal çizimini başlat (Sonraki gün yapılacak)
-    // draw_fractal(&f); 
-
-    // 5. MiniLibX Ana Döngüsünü Başlatma
-    // Bu fonksiyon tüm olayları dinlemeye başlar
+    draw_fractal(&f);
     mlx_loop(f.mlx); 
 
     return (EXIT_SUCCESS);

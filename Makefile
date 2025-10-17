@@ -2,7 +2,6 @@ NAME = fractol
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-# MiniLibX Klasör Yolu
 MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
@@ -17,10 +16,11 @@ LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 # -I$(MLX_DIR): mlx.h dosyasının yolunu belirtir
 INCLUDES = -I. -I$(MLX_DIR)
 
-SRCS = fractol.c \
-	   mlx_utils.c \
+SRCS = mlx_utils.c \
 	   math_utils.c \
-	   render.c
+	   libft_stuff.c \
+	   drawing_fractal.c \
+	   main.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -36,7 +36,7 @@ $(MLX_LIB):
 	@make -C $(MLX_DIR)
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJS)
 
 fclean:	clean
 	$(RM) $(NAME)

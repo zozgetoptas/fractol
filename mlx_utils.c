@@ -1,15 +1,23 @@
-// Başlatma ve Hata Kontrolü
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ztoptas <ztoptas@student.42kocaeli.com.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/17 19:47:19 by ztoptas           #+#    #+#             */
+/*   Updated: 2025/10/17 19:47:19 by ztoptas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "fractol.h"
+
 int init_mlx(t_fractol *f)
 {
     // 1. mlx bağlantısını başlat
     f->mlx = mlx_init();
     if (f->mlx == NULL)
-    {
-        // Hata durumunda bellek temizliği yap ve çık
         return (0);
-    }
-    
-    // 2. Pencereyi oluştur (WIDTH ve HEIGHT daha önce #define edilmiş olmalı)
     f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "fractol");
     if (f->win == NULL)
     {
@@ -56,13 +64,7 @@ int key_hook(int keycode, t_fractol *f)
 
 void setup_mlx_hooks(t_fractol *f)
 {
-    // ESC tuşu olayını bağlama (Klavye yönetimi)
-    // mlx_key_hook(window_ptr, function, param);
     mlx_key_hook(f->win, key_hook, f);
-
-    // Pencere kapatma düğmesi (X) olayını bağlama
-    // mlx_hook(window_ptr, event, mask, function, param);
-    // Pencere kapatma olayı: 17 (DestroyNotify)
     mlx_hook(f->win, 17, 0, clean_exit, f); 
 }
 
