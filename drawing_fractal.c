@@ -18,25 +18,13 @@ static int get_color(int iter, int max_iter)
     int r;
     int g;
     int b;
-    double t; // Renk hesaplamasında kullanılacak oran
 
     if (iter == max_iter)
-        return (0x000000); // Küme içi: Siyah
-
-    // Renk skalasını iterasyona göre haritala (0.0 ile 1.0 arası bir değer)
-    t = (double)iter / max_iter;
-    
-    // RGB kanallarını farklı fonksiyonlarla veya sabitlerle haritalayarak 
-    // "psikedelik" bir etki yaratabiliriz.
-    // Örnek 1: Sinüs tabanlı renk geçişi (daha yumuşak ve renkli)
-    r = (int)(9 * t * 255) % 256;
-    g = (int)(15 * t * 255) % 256;
-    b = (int)(30 * t * 255) % 256;
-
-    // Örnek 2: Üçlü palet kaydırma (daha basit)
-    // r = (iter * 10) % 256;
-    // g = (iter * 7) % 256;
-    // b = (iter * 3) % 256;
+        return (0x000000); // siyah
+    // renk skalasını iterasyona göre haritala (0.0 ile 1.0 arası bir değer)
+    r = (int)(iter * 10) % 256;
+    g = (int)(iter * 7) % 256;
+    b = (int)(iter * 3) % 256;
 
     // RGB formatına dönüştür: (R << 16) | (G << 8) | B
     return ((r << 16) | (g << 8) | b);
@@ -91,6 +79,3 @@ int draw_fractal(t_fractol *f)
     mlx_put_image_to_window(f->mlx, f->win, f->img.img_ptr, 0, 0);
     return (0);
 }
-
-
-

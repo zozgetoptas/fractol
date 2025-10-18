@@ -12,7 +12,7 @@ MLX_LIB = $(MLX_DIR)/libmlx.a # derlenmis minilibx statik kutuphanesinin pathi
 # -lm: Matematik kütüphanesi (Fraktallar için zorunlu)
 LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 INCLUDES = -I. -I$(MLX_DIR)
-SRCS = mlx_utils.c \
+SRCS = setup_mlx.c \
 	   math_utils.c \
 	   libft_stuff.c \
 	   drawing_fractal.c \

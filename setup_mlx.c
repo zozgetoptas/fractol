@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*   setup_mlx.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ztoptas <ztoptas@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 19:47:19 by ztoptas           #+#    #+#             */
-/*   Updated: 2025/10/17 19:47:19 by ztoptas          ###   ########.fr       */
+/*   Created: 2025/10/18 13:22:31 by ztoptas           #+#    #+#             */
+/*   Updated: 2025/10/18 13:22:31 by ztoptas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,23 @@
 
 int init_mlx(t_fractol *f)
 {
-    // 1. mlx bağlantısını başlat
-    f->mlx = mlx_init();
-    if (f->mlx == NULL)
+    f->mlx = mlx_init(); // x11 sunucusuyla baglanti kurar, basariliysa 1 degilse 0 dondurur
+    if (!f->mlx)
         return (0);
-    f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "fractol");
+    f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "fractol"); // pencere ayarlaniyor, basligi fractol
     if (f->win == NULL)
     {
-        // Pencere oluşturulamazsa, mlx bağlantısını da temizle
-        // MiniLibX'in mlx_destroy_display() fonksiyonu kullanılabilir (bazı MLX versiyonlarında vardır)
+        mlx_destroy_display(f->mlx);
         return (0);
     }
-    
-    // 3. Görüntü (Image) oluşturma ve adresini alma (Piksel boyama için)
-    f->img.img_ptr = mlx_new_image(f->mlx, WIDTH, HEIGHT);
+    f->img.img_ptr = mlx_new_image(f->mlx, WIDTH, HEIGHT); // canvasi olusturur
     f->img.addr = mlx_get_data_addr(f->img.img_ptr, &f->img.bpp,
                                     &f->img.line_len, &f->img.endian);
-    
     return (1);
 }
 
-// MiniLibX kaynaklarını temizler ve programdan çıkar.
-int clean_exit(t_fractol *f)
+int destroy_and_exit(t_fractol *f)
 {
-    // Görüntüyü temizle
     if (f->img.img_ptr)
         mlx_destroy_image(f->mlx, f->img.img_ptr);
 
@@ -51,16 +44,16 @@ int clean_exit(t_fractol *f)
     exit(EXIT_SUCCESS);
 }
 
-int key_hook(int keycode, t_fractol *f)
+int is_esc(int keycode, t_fractol *f)
 {
     if (keycode == 65307) 
-        clean_exit(f);
+        destroy_and_exit(f);
     return (0);
 }
 
-void setup_mlx_hooks(t_fractol *f)
+void mlx_hooks(t_fractol *f)
 {
-    mlx_key_hook(f->win, key_hook, f);
-    mlx_hook(f->win, 17, 0, clean_exit, f); 
+    mlx_key_hook(f->win, is_esc, f);
+    mlx_hook(f->win, 17, 0, destroy_and_exit, f); 
 }
 
