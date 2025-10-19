@@ -1,41 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   math_utils.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ztoptas <ztoptas@student.42kocaeli.com.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 21:12:34 by ztoptas           #+#    #+#             */
-/*   Updated: 2025/10/17 21:12:34 by ztoptas          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
 #include "fractol.h"
-
-// Julia iterasyonunu hesaplar.
-// Z başlangıç değeri piksel koordinatlarıdır.
-// C ise sabit parametredir (f->julia_c).
 
 int julia_iter(t_complex z, t_complex c)
 {
     int iter;
 
     iter = 0;
-    while (iter < MAX_ITER) // MAX_ITER, fractol.h'de tanımlı
+    while (iter < MAX_ITER)
     {
-        // |z|^2 > 4 ise kaçar
         if ((z.re * z.re + z.im * z.im) > 4.0)
-            return (iter); // Kaçış süresi
-        
-        // z_next = z^2 + c
+            return (iter);
         z = complex_square(z);
         z.re += c.re;
         z.im += c.im;
-        
         iter++;
     }
-    return (MAX_ITER); // Kümenin içinde kaldı
+    return (MAX_ITER);
 }
 
 t_complex   complex_square(t_complex z)

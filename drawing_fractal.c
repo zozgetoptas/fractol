@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   drawing_fractal.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ztoptas <ztoptas@student.42kocaeli.com.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 20:13:54 by ztoptas           #+#    #+#             */
-/*   Updated: 2025/10/17 20:13:54 by ztoptas          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "fractol.h"
 
 // f->img.addr'a belirtilen x, y koordinatına 'color' değerini yazar.
@@ -18,13 +6,14 @@ static int get_color(int iter, int max_iter)
     int r;
     int g;
     int b;
+    double t = (double)iter / max_iter;
 
     if (iter == max_iter)
         return (0x000000); // siyah
     // renk skalasını iterasyona göre haritala (0.0 ile 1.0 arası bir değer)
-    r = (int)(iter * 10) % 256;
-    g = (int)(iter * 7) % 256;
-    b = (int)(iter * 3) % 256;
+    r = (int)(9 * t * 255) % 256;
+    g = (int)(15 * t * 255) % 256;
+    b = (int)(30 * t * 255) % 256;
 
     // RGB formatına dönüştür: (R << 16) | (G << 8) | B
     return ((r << 16) | (g << 8) | b);

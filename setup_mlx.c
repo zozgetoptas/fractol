@@ -1,16 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   setup_mlx.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ztoptas <ztoptas@student.42kocaeli.com.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/18 13:22:31 by ztoptas           #+#    #+#             */
-/*   Updated: 2025/10/18 13:22:31 by ztoptas          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "fractol.h"
+#include <stdlib.h>
 
 int init_mlx(t_fractol *f)
 {
@@ -41,7 +30,7 @@ int destroy_and_exit(t_fractol *f)
     // MLX bağlantısını temizle (bazı MLX versiyonlarında gereklidir)
     // mlx_destroy_display(f->mlx); 
 
-    exit(EXIT_SUCCESS);
+    exit(0);
 }
 
 int is_esc(int keycode, t_fractol *f)
